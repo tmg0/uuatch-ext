@@ -1,11 +1,9 @@
 {
   "recommendations": [
-    "antfu.vite",
+    "vue.volar",
     "antfu.iconify",
     "antfu.unocss",
-    "antfu.goto-alias",
-    "vue.volar",
     "dbaeumer.vscode-eslint",
-    "EditorConfig.EditorConfig"
+    "csstools.postcss"
   ]
 }
