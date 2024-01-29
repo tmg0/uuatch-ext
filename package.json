@@ -1,0 +1,19 @@
+{
+  "name": "uuatch-ext",
+  "version": "0.0.1",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "vitest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zekunjin/uuatch-ext.git"
+  },
+  "author": "zekun.jin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zekunjin/uuatch-ext/issues"
+  },
+  "homepage": "https://github.com/zekunjin/uuatch-ext#readme"
+}
