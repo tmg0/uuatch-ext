@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { useXPath } from '../../composables/useXPath'
+import { useXPath } from '~/composables/useXPath'
 import 'uno.css'
 
 const { x, y } = useMouse({ type: 'client' })
@@ -9,7 +9,7 @@ const bounding = reactive(useElementBounding(element))
 const { xpath } = useXPath(element)
 
 const isPinned = ref(false)
-const isDisabled = ref(false)
+const { isAvailable } = useStore()
 
 watch(() => [text.value, isPinned.value], ([_text, _isPinned]) => {
   if (_isPinned) { return }
@@ -19,7 +19,7 @@ watch(() => [text.value, isPinned.value], ([_text, _isPinned]) => {
 useEventListener('scroll', bounding.update, true)
 
 const boxStyles = computed(() => {
-  if (element.value && !isDisabled.value) {
+  if (element.value && isAvailable.value) {
     return {
       display: 'block',
       width: `${bounding.width}px`,

@@ -5,7 +5,7 @@ import { storage } from 'webextension-polyfill'
 
 import type {
   StorageLikeAsync,
-  UseStorageAsyncOptions,
+  UseStorageAsyncOptions
 } from '@vueuse/core'
 import type { MaybeRefOrGetter, RemovableRef } from '@vueuse/shared'
 import type { Ref } from 'vue-demi'
@@ -14,7 +14,7 @@ import type { Storage } from 'webextension-polyfill'
 export type WebExtensionStorageOptions<T> = UseStorageAsyncOptions<T>
 
 // https://github.com/vueuse/vueuse/blob/658444bf9f8b96118dbd06eba411bb6639e24e88/packages/core/useStorage/guess.ts
-export function guessSerializerType<T extends(string | number | boolean | object | null)>(rawInit: T) {
+export function guessSerializerType<T extends (string | number | boolean | object | null)>(rawInit: T) {
   return rawInit == null
     ? 'any'
     : rawInit instanceof Set
@@ -35,19 +35,19 @@ export function guessSerializerType<T extends(string | number | boolean | object
 }
 
 const storageInterface: StorageLikeAsync = {
-  removeItem(key: string) {
+  removeItem (key: string) {
     return storage.local.remove(key)
   },
 
-  setItem(key: string, value: string) {
+  setItem (key: string, value: string) {
     return storage.local.set({ [key]: value })
   },
 
-  async getItem(key: string) {
+  async getItem (key: string) {
     const storedData = await storage.local.get(key)
 
     return storedData[key]
-  },
+  }
 }
 
 /**
@@ -57,10 +57,10 @@ const storageInterface: StorageLikeAsync = {
  * @param initialValue
  * @param options
  */
-export function useWebExtensionStorage<T extends(string | number | boolean | object | null)>(
+export function useWebExtensionStorage<T extends (string | number | boolean | object | null)>(
   key: string,
   initialValue: MaybeRefOrGetter<T>,
-  options: WebExtensionStorageOptions<T> = {},
+  options: WebExtensionStorageOptions<T> = {}
 ): RemovableRef<T> {
   const {
     flush = 'pre',
@@ -72,7 +72,7 @@ export function useWebExtensionStorage<T extends(string | number | boolean | obj
     eventFilter,
     onError = (e) => {
       console.error(e)
-    },
+    }
   } = options
 
   const rawInit: T = toValue(initialValue)
@@ -81,30 +81,21 @@ export function useWebExtensionStorage<T extends(string | number | boolean | obj
   const data = (shallow ? shallowRef : ref)(initialValue) as Ref<T>
   const serializer = options.serializer ?? StorageSerializers[type]
 
-  async function read(event?: { key: string; newValue: string | null }) {
-    if (event && event.key !== key)
-      return
+  async function read (event?: { key: string; newValue: string | null }) {
+    if (event && event.key !== key) { return }
 
     try {
       const rawValue = event ? event.newValue : await storageInterface.getItem(key)
       if (rawValue == null) {
         data.value = rawInit
-        if (writeDefaults && rawInit !== null)
-          await storageInterface.setItem(key, await serializer.write(rawInit))
-      }
-      else if (mergeDefaults) {
+        if (writeDefaults && rawInit !== null) { await storageInterface.setItem(key, await serializer.write(rawInit)) }
+      } else if (mergeDefaults) {
         const value = await serializer.read(rawValue) as T
-        if (typeof mergeDefaults === 'function')
-          data.value = mergeDefaults(value, rawInit)
-        else if (type === 'object' && !Array.isArray(value))
-          data.value = { ...(rawInit as Record<keyof unknown, unknown>), ...(value as Record<keyof unknown, unknown>) } as T
-        else data.value = value
-      }
-      else {
+        if (typeof mergeDefaults === 'function') { data.value = mergeDefaults(value, rawInit) } else if (type === 'object' && !Array.isArray(value)) { data.value = { ...(rawInit as Record<keyof unknown, unknown>), ...(value as Record<keyof unknown, unknown>) } as T } else { data.value = value }
+      } else {
         data.value = await serializer.read(rawValue) as T
       }
-    }
-    catch (error) {
+    } catch (error) {
       onError(error)
     }
   }
@@ -116,7 +107,7 @@ export function useWebExtensionStorage<T extends(string | number | boolean | obj
       for (const [key, change] of Object.entries(changes)) {
         await read({
           key,
-          newValue: change.newValue as string | null,
+          newValue: change.newValue as string | null
         })
       }
     }
@@ -133,16 +124,15 @@ export function useWebExtensionStorage<T extends(string | number | boolean | obj
     async () => {
       try {
         await (data.value == null ? storageInterface.removeItem(key) : storageInterface.setItem(key, await serializer.write(data.value)))
-      }
-      catch (error) {
+      } catch (error) {
         onError(error)
       }
     },
     {
       flush,
       deep,
-      eventFilter,
-    },
+      eventFilter
+    }
   )
 
   return data as RemovableRef<T>
