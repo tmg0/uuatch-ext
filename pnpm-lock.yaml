@@ -4,6 +4,11 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+dependencies:
+  get-xpath:
+    specifier: ^3.1.0
+    version: 3.1.0
+
 devDependencies:
   '@ffflorian/jszip-cli':
     specifier: ^3.4.1
@@ -3617,6 +3622,10 @@ packages:
   /get-tsconfig@4.5.0:
     resolution: {integrity: sha512-MjhiaIWCJ1sAU4pIQ5i5OfOuHHxVo1oYeNsWTON7jxYkod8pHocXeh+SSbmu5OZZZK73B6cbJ2XADzXehLyovQ==}
     dev: true
+
+  /get-xpath@3.1.0:
+    resolution: {integrity: sha512-R/52dpa+WO8bO/df5VivWIf+VoI++iPVEPrAKRUSQHOBEK1cxKMmTxbhCoGUNIH+znE9ZvU5rFd188QkV4Q6QA==}
+    dev: false
 
   /getpass@0.1.7:
     resolution: {integrity: sha512-0fzj9JxOLfJ+XGLhR8ze3unN0KZCgZwiSSDz168VERjK8Wl8kVSdcu2kspd4s4wtAa1y/qrVRiAA0WclVsu0ng==}

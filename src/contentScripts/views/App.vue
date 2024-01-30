@@ -1,12 +1,14 @@
 <script lang="ts" setup>
+import { useXPath } from '../../composables/useXPath'
 import 'uno.css'
 
 const { x, y } = useMouse({ type: 'client' })
 const { element, pause, resume } = useElementByPoint({ x, y })
 const { text } = useTextSelection()
 const bounding = reactive(useElementBounding(element))
+const { xpath } = useXPath(element)
 
-watch(text, (value) => { value ? pause() : resume() })
+watch(text, (value) => { value ? onSelect() : resume() })
 
 useEventListener('scroll', bounding.update, true)
 
@@ -26,6 +28,11 @@ const boxStyles = computed(() => {
     display: 'none'
   }
 })
+
+const onSelect = () => {
+  console.log(xpath.value)
+  pause()
+}
 </script>
 
 <template>
