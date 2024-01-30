@@ -2,8 +2,11 @@
 import 'uno.css'
 
 const { x, y } = useMouse({ type: 'client' })
-const { element } = useElementByPoint({ x, y })
+const { element, pause, resume } = useElementByPoint({ x, y })
+const { text } = useTextSelection()
 const bounding = reactive(useElementBounding(element))
+
+watch(text, (value) => { value ? pause() : resume() })
 
 useEventListener('scroll', bounding.update, true)
 
@@ -16,11 +19,11 @@ const boxStyles = computed(() => {
       left: `${bounding.left}px`,
       top: `${bounding.top}px`,
       backgroundColor: '#3eaf7c44',
-      transition: 'all 0.05s linear',
+      transition: 'all 0.05s linear'
     }
   }
   return {
-    display: 'none',
+    display: 'none'
   }
 })
 </script>
