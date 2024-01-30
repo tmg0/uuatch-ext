@@ -4,8 +4,8 @@ import { createApp } from 'vue'
 import App from './views/App.vue'
 import { setupApp } from '~/logic/common-setup'
 
-// Firefox `browser.tabs.executeScript()` requires scripts return a primitive value
-(() => {
+const main = () => {
+  // Firefox `browser.tabs.executeScript()` requires scripts return a primitive value
   console.info('[vitesse-webext] Hello world from content script')
 
   // communication example: send previous tab title from background page
@@ -27,4 +27,6 @@ import { setupApp } from '~/logic/common-setup'
   const app = createApp(App)
   setupApp(app)
   app.mount(root)
-})()
+}
+
+main()
