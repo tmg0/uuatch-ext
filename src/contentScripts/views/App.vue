@@ -8,7 +8,13 @@ const { text } = useTextSelection()
 const bounding = reactive(useElementBounding(element))
 const { xpath } = useXPath(element)
 
-watch(text, (value) => { value ? onSelect() : resume() })
+const isPinned = ref(false)
+const isDisabled = ref(false)
+
+watch(() => [text.value, isPinned.value], ([_text, _isPinned]) => {
+  if (_isPinned) { return }
+  _text ? onSelect() : resume()
+})
 
 useEventListener('scroll', bounding.update, true)
 
@@ -29,12 +35,12 @@ const boxStyles = computed(() => {
   }
 })
 
-const onSelect = () => {
+const onSelect = useThrottleFn(() => {
   console.log(xpath.value)
   pause()
-}
+}, 500)
 </script>
 
 <template>
-  <div :style="boxStyles" fixed pointer-events-none z-9999 border="1 $vp-c-brand" />
+  <div :style="isDisabled ? {} : boxStyles" fixed pointer-events-none z-9999 border="1 $vp-c-brand" />
 </template>
