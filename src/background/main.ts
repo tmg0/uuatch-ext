@@ -4,6 +4,7 @@ import type { Tabs } from 'webextension-polyfill'
 // only on dev mode
 if (import.meta.hot) {
   // @ts-expect-error for background HMR
+  // eslint-disable-next-line import/no-absolute-path
   import('/@vite/client')
   // load latest content script
   import('./contentScriptHMR')
@@ -29,8 +30,7 @@ browser.tabs.onActivated.addListener(async ({ tabId }) => {
   try {
     tab = await browser.tabs.get(previousTabId)
     previousTabId = tabId
-  }
-  catch {
+  } catch {
     return
   }
 
@@ -43,12 +43,11 @@ onMessage('get-current-tab', async () => {
   try {
     const tab = await browser.tabs.get(previousTabId)
     return {
-      title: tab?.title,
+      title: tab?.title
     }
-  }
-  catch {
+  } catch {
     return {
-      title: undefined,
+      title: undefined
     }
   }
 })

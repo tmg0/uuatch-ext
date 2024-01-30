@@ -6,10 +6,22 @@ const { x, y } = useMouse({ type: 'client' })
 const { element, pause, resume } = useElementByPoint({ x, y })
 const { text } = useTextSelection()
 const bounding = reactive(useElementBounding(element))
+const keys = useMagicKeys()
+const altS = keys['Alt+S']
 const { xpath } = useXPath(element)
 
 const isPinned = ref(false)
 const { isAvailable } = useStore()
+
+watch(isAvailable, (value) => {
+  if (!value) { pause() }
+})
+
+watch(altS, (value) => {
+  if (value) {
+    consola.info(`[UUatch-DOM XPath] : ${xpath.value}`)
+  }
+})
 
 watch(() => [text.value, isPinned.value], ([_text, _isPinned]) => {
   if (_isPinned) { return }
@@ -35,10 +47,7 @@ const boxStyles = computed(() => {
   }
 })
 
-const onSelect = useThrottleFn(() => {
-  consola.info(`[UUatch-DOM XPath] : ${xpath.value}`)
-  pause()
-}, 500)
+const onSelect = useThrottleFn(() => { pause() }, 500)
 </script>
 
 <template>
