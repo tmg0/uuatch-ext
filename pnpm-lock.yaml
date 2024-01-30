@@ -4,11 +4,6 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-dependencies:
-  get-xpath:
-    specifier: ^3.1.0
-    version: 3.1.0
-
 devDependencies:
   '@ffflorian/jszip-cli':
     specifier: ^3.4.1
@@ -49,6 +44,9 @@ devDependencies:
   chokidar:
     specifier: ^3.5.3
     version: 3.5.3
+  consola:
+    specifier: ^3.2.3
+    version: 3.2.3
   cross-env:
     specifier: ^7.0.3
     version: 7.0.3
@@ -1081,7 +1079,7 @@ packages:
       cac: 6.7.14
       chokidar: 3.5.3
       colorette: 2.0.20
-      consola: 3.1.0
+      consola: 3.2.3
       fast-glob: 3.2.12
       magic-string: 0.30.0
       pathe: 1.1.0
@@ -2176,8 +2174,9 @@ packages:
       xdg-basedir: 5.1.0
     dev: true
 
-  /consola@3.1.0:
-    resolution: {integrity: sha512-rrrJE6rP0qzl/Srg+C9x/AE5Kxfux7reVm1Wh0wCjuXvih6DqZgqDZe8auTD28fzJ9TF0mHlSDrPpWlujQRo1Q==}
+  /consola@3.2.3:
+    resolution: {integrity: sha512-I5qxpzLv+sJhTVEoLYNcTW+bThDCPsit0vLNKShZx6rLtpilNpmmeTPaeqJb9ZE9dV3DGaeby6Vuhrw38WjeyQ==}
+    engines: {node: ^14.18.0 || >=16.10.0}
     dev: true
 
   /core-js@3.29.0:
@@ -3622,10 +3621,6 @@ packages:
   /get-tsconfig@4.5.0:
     resolution: {integrity: sha512-MjhiaIWCJ1sAU4pIQ5i5OfOuHHxVo1oYeNsWTON7jxYkod8pHocXeh+SSbmu5OZZZK73B6cbJ2XADzXehLyovQ==}
     dev: true
-
-  /get-xpath@3.1.0:
-    resolution: {integrity: sha512-R/52dpa+WO8bO/df5VivWIf+VoI++iPVEPrAKRUSQHOBEK1cxKMmTxbhCoGUNIH+znE9ZvU5rFd188QkV4Q6QA==}
-    dev: false
 
   /getpass@0.1.7:
     resolution: {integrity: sha512-0fzj9JxOLfJ+XGLhR8ze3unN0KZCgZwiSSDz168VERjK8Wl8kVSdcu2kspd4s4wtAa1y/qrVRiAA0WclVsu0ng==}

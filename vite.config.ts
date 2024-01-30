@@ -31,6 +31,7 @@ export const sharedConfig: UserConfig = {
         'vue',
         '@vueuse/core',
         {
+          consola: ['default', 'consola'],
           'webextension-polyfill': [
             ['*', 'browser']
           ]

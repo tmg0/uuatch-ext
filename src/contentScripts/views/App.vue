@@ -19,7 +19,7 @@ watch(() => [text.value, isPinned.value], ([_text, _isPinned]) => {
 useEventListener('scroll', bounding.update, true)
 
 const boxStyles = computed(() => {
-  if (element.value) {
+  if (element.value && !isDisabled.value) {
     return {
       display: 'block',
       width: `${bounding.width}px`,
@@ -36,11 +36,11 @@ const boxStyles = computed(() => {
 })
 
 const onSelect = useThrottleFn(() => {
-  console.log(xpath.value)
+  consola.info(`[UUatch-DOM XPath] : ${xpath.value}`)
   pause()
 }, 500)
 </script>
 
 <template>
-  <div :style="isDisabled ? {} : boxStyles" fixed pointer-events-none z-9999 border="1 $vp-c-brand" />
+  <div :style="boxStyles" fixed pointer-events-none z-9999 border="1 $vp-c-brand" />
 </template>

@@ -42,6 +42,7 @@
     "@vue/test-utils": "^2.3.2",
     "@vueuse/core": "^10.1.2",
     "chokidar": "^3.5.3",
+    "consola": "^3.2.3",
     "cross-env": "^7.0.3",
     "crx": "^5.0.1",
     "eslint": "^8.40.0",
