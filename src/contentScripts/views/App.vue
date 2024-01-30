@@ -6,21 +6,25 @@ const { x, y } = useMouse({ type: 'client' })
 const { element, pause, resume } = useElementByPoint({ x, y })
 const { text } = useTextSelection()
 const bounding = reactive(useElementBounding(element))
-const keys = useMagicKeys()
-const altS = keys['Alt+S']
 const { xpath } = useXPath(element)
 
 const isPinned = ref(false)
 const { isAvailable } = useStore()
 
-watch(isAvailable, (value) => {
-  if (!value) { pause() }
+onKeyStroke('Escape', (e) => {
+  e.preventDefault()
+  isPinned.value = false
 })
 
-watch(altS, (value) => {
-  if (value) {
-    consola.info(`[UUatch-DOM XPath] : ${xpath.value}`)
-  }
+onKeyStroke(['s', 'S'], (e) => {
+  e.preventDefault()
+  if (!element.value) { return }
+  consola.info(`[UUatch-DOM XPath] : ${xpath.value}`)
+  isPinned.value = true
+})
+
+watch(isAvailable, (value) => {
+  if (!value) { pause() }
 })
 
 watch(() => [text.value, isPinned.value], ([_text, _isPinned]) => {
