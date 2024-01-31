@@ -6,7 +6,6 @@ interface DOMSelectorEvent {
 
 const xpath = ref('')
 const location = useBrowserLocation()
-const { watches } = useStore()
 
 const params = computed(() => ({
   xpath: xpath.value,
@@ -15,7 +14,6 @@ const params = computed(() => ({
 
 const onSelect = (e: DOMSelectorEvent) => {
   xpath.value = e.xpath
-  watches.value = [...watches.value, params.value]
 }
 </script>
 

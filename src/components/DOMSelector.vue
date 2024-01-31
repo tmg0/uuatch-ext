@@ -15,11 +15,13 @@ const isPinned = ref(false)
 const { isAvailable } = useStore()
 
 onKeyStroke('Escape', (e) => {
+  if (isAvailable.value) { return }
   e.preventDefault()
   isPinned.value = false
 })
 
 watch(altS, (value) => {
+  if (isAvailable.value) { return }
   if (!element.value) { return }
   if (value) {
     consola.info(`[UUatch-DOM XPath] : ${xpath.value}`)

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { version } from '../../package.json'
 
-const { isAvailable, watches } = useStore()
+const { isAvailable } = useStore()
 
 const toggleAvailable = () => { isAvailable.value = !isAvailable.value }
 </script>
@@ -27,7 +27,7 @@ const toggleAvailable = () => { isAvailable.value = !isAvailable.value }
     </nav>
 
     <div>
-      {{ watches }}
+      content
     </div>
   </main>
 </template>
