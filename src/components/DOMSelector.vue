@@ -7,8 +7,7 @@ const { x, y } = useMouse({ type: 'client' })
 const { element, pause, resume } = useElementByPoint({ x, y })
 const { text } = useTextSelection()
 const bounding = reactive(useElementBounding(element))
-const keys = useMagicKeys()
-const altS = keys['Alt+S']
+const { alt_s } = useMagicKeys()
 const { xpath } = useXPath(element)
 
 const isPinned = ref(false)
@@ -20,8 +19,8 @@ onKeyStroke('Escape', (e) => {
   isPinned.value = false
 })
 
-watch(altS, (value) => {
-  if (isAvailable.value) { return }
+watch(alt_s, (value) => {
+  if (!isAvailable.value) { return }
   if (!element.value) { return }
   if (value) {
     consola.info(`[UUatch-DOM XPath] : ${xpath.value}`)
@@ -36,7 +35,7 @@ watch(isAvailable, (value) => {
 
 watch(() => [text.value, isPinned.value], ([_text, _isPinned]) => {
   if (_isPinned) { return }
-  _text ? onSelectDOM() : resume()
+  _text ? useThrottleFn(() => { pause() }, 500)() : resume()
 })
 
 useEventListener('scroll', bounding.update, true)
@@ -57,8 +56,6 @@ const boxStyles = computed(() => {
     display: 'none'
   }
 })
-
-const onSelectDOM = useThrottleFn(() => { pause() }, 500)
 </script>
 
 <template>
